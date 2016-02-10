@@ -20,20 +20,24 @@ from advent.eight.eight import *
 
 class TestEight(TestCase):
     def test_counting(self):
-        code_count, char_count = count_characters("\"\"")
+        code_count, char_count, encoded_count = count_characters("\"\"")
         self.assertEqual(0, char_count)
+        self.assertEqual(6, encoded_count)
         self.assertEqual(2, code_count)
 
-        code_count, char_count = count_characters("\"abc\"")
+        code_count, char_count, encoded_count = count_characters("\"abc\"")
         self.assertEqual(3, char_count)
+        self.assertEqual(9, encoded_count)
         self.assertEqual(5, code_count)
 
-        code_count, char_count = count_characters("\"aaa\\\"aaa\"")
+        code_count, char_count, encoded_count = count_characters("\"aaa\\\"aaa\"")
         self.assertEqual(7, char_count)
+        self.assertEqual(16, encoded_count)
         self.assertEqual(10, code_count)
 
-        code_count, char_count = count_characters("\"\\x27\"")
+        code_count, char_count, encoded_count = count_characters("\"\\x27\"")
         self.assertEqual(1, char_count)
+        self.assertEqual(11, encoded_count)
         self.assertEqual(6, code_count)
 
     def test_total(self):
@@ -43,34 +47,8 @@ class TestEight(TestCase):
             "\"aaa\\\"aaa\"",
             "\"\\x27\""
         ]
-        expected = (2+5+10+6)-(0+3+7+1)  # 12
-        result = total(strings)
-        self.assertEqual(expected, result)
-
-    def test_encoded(self):
-        code_count, encoded_count = count_encoded_characters("\"\"")
-        self.assertEqual(6, encoded_count)
-        self.assertEqual(2, code_count)
-
-        code_count, encoded_count = count_encoded_characters("\"abc\"")
-        self.assertEqual(9, encoded_count)
-        self.assertEqual(5, code_count)
-
-        code_count, encoded_count = count_encoded_characters("\"aaa\\\"aaa\"")
-        self.assertEqual(16, encoded_count)
-        self.assertEqual(10, code_count)
-
-        code_count, encoded_count = count_encoded_characters("\"\\x27\"")
-        self.assertEqual(11, encoded_count)
-        self.assertEqual(6, code_count)
-
-    def test_total_encoded(self):
-        strings = [
-            "\"\"",
-            "\"abc\"",
-            "\"aaa\\\"aaa\"",
-            "\"\\x27\""
-        ]
-        expected = (6+9+16+11)-(2+5+10+6) # 19
-        result = total_encoded(strings)
-        self.assertEqual(expected, result)
+        expected_char = (2+5+10+6)-(0+3+7+1)  # 12
+        expected_encoded = (6+9+16+11)-(2+5+10+6) # 19
+        result_char, result_encoded = total(strings)
+        self.assertEqual(expected_char, result_char)
+        self.assertEqual(expected_encoded, result_encoded)

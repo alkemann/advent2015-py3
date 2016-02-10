@@ -1,9 +1,7 @@
-from advent.eight.eight import total, total_encoded
+from advent.eight.eight import total
 
 
-strings = open("data_eight.txt", "r").readlines()
-total = total(strings)
-encoded = total_encoded(strings)
+total, encoded = total(open("data_eight.txt", "r").readlines())
 
 print("*********************")
 print(" Difference between code and content [%d]" % total)
